@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block h1 %}Favorites{% endblock %}
+{% block content %}
+<ul>
+{% for fav in object_list %}
+    <li><a href="{% url 'article-detail' fav.article.id %}"> {{ fav.article.title }} </a></li>
+{% empty %}
+    <li>
+        No articles yet.
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
+

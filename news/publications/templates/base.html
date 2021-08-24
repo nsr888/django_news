@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block title %}
+      <title>News</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {# Load the tag library #}
+    {% load bootstrap3 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    <style>
+      #name {
+          color: gray;
+      }
+      #name_login {
+          color: red;
+      }
+      label {
+          display: block;
+      }
+      table.bordered { width:100% }
+      table.bordered,
+      table.bordered td,
+      table.bordered th {
+          padding: 1rem;
+          border-bottom: 1px solid #ccc;
+          border-collapse: collapse;
+      }
+      .section {
+        margin: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="wrap">
+    <h1> {% block h1 %} {% endblock %}
+{% if user.is_authenticated %}
+            <button class="btn" onclick="window.location='{% url 'article-create' %}?next=/'">Share your
+              writings</button>
+{% endif %}
+    </h1>
+    {% include "nav.html" %}
+    <section class="section">
+      {% block content %} {% endblock %}
+    </section>
+  </div>
+  </body>
+</html>
