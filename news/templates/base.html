@@ -19,13 +19,16 @@
     
     {% load static %}
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link id="page_favicon" href="{% static 'favicon.ico' %}" rel="icon" type="image/x-icon" />
   </head>
   <body>
   <div class="wrap">
     {% include "nav.html" %}
     <section class="section">
+      <div class="container mt-5">
         <h1> {% block h1 %} {% endblock %} </h1>
-      {% block content %} {% endblock %}
+        {% block content %} {% endblock %}
+      </div>
     </section>
   </div>
   </body>

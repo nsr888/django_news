@@ -1,0 +1,54 @@
+#name {
+  color: gray;
+}
+#name_login {
+  color: red;
+}
+label {
+  display: block;
+}
+table.bordered {
+  width: 100%;
+}
+table.bordered,
+table.bordered td,
+table.bordered th {
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  border-collapse: collapse;
+}
+.section {
+  margin: 1rem;
+}
+#chat-message-input {
+  width: 300px;
+  display: inline-block;
+}
+#chat-message-submit {
+  display: inline-block;
+}
+#chat-log {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  list-style-type: none;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  height: calc(80vh - 200px);
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+.chat li:first-child {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+.chat {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 5fr;
+}
+#active-users {
+  font-weight: bold;
+}

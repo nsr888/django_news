@@ -13,7 +13,7 @@
       {% csrf_token %}
       <input type="hidden" name="article" value="{{ object.id }}"/>
       <input type="hidden" name="user" value="{{ user.id }}"/>
-      <input type="submit" name="signup" value="Add to favorite">
+      <input type="submit" name="signup" value="Add to favorite" class="btn btn-warning">
     </form>
 {% endif %}
 {% endblock %}

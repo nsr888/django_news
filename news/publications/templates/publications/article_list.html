@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block h1 %}
   {% if not publications %}
-    Articles
+    City News
   {% else %}
-    Publications
+    Your news
   {% endif %}
 {% endblock %}
 {% block content %}
-  <table class="bordered">
+
+  <table class="table table-striped">
     <tr>
       <th> Title </th>
       <th> Synopsis </th>
@@ -23,17 +24,24 @@
     {% for article in object_list %}
       <tr>
         <td> {{ article.title }} </td>
-        <td>
-          {{ article.synopsis | truncatechars:20 }} 
+        <td class="small">
+          {{ article.synopsis | truncatechars:200 }} 
         </td>
         {% if not publications %}
-          <td> {{ article.author }} </td>
+          <td class="small">
+            <div class="badge bg-warning text-dark text-wrap">
+            {{ article.author }} 
+            </div>
+          </td>
         {% endif %}
-        <td> {{ article.created }} </td>
+          <td class="small">
+         {{ article.created }} </td>
         {% if not publications %}
-          <td> {{ article.duration }} </td>
+          <td class="small">
+           {{ article.duration }} </td>
         {% endif %}
-        <td><button class = "btn btn-success" onclick="window.location='{% url 'article-detail' article.id %}'">READ</a></td>
+          <td class="small">
+          <button class = "btn btn-dark btn-sm" onclick="window.location='{% url 'article-detail' article.id %}'">READ</a></td>
       </tr>
     {% empty %}
       <tr>
