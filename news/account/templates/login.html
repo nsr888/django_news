@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block h1 %}
+  Login 1
+{% endblock %}
+{% block content %}
+    <style>
+      #name {
+          color: gray;
+      }
+      #name_login {
+          color: red;
+      }
+      label {
+          display: block;
+      }
+      table.bordered { width:100% }
+      table.bordered,
+      table.bordered td,
+      table.bordered th {
+          padding: 1rem;
+          border-bottom: 1px solid #ccc;
+          border-collapse: collapse;
+      }
+      .section {
+        margin: 1rem;
+      }
+    </style>
+    <script>
+        window.onload = function() {
+            console.log('start');
+            $("#message").hide()
+            $("#logout").hide()
+            {% if user.is_authenticated %}
+                $("#form").hide()
+                $("#message").show().text('Logged as {{ user.username }}')
+                $("#logout").show()
+            {% endif %}
+            var form = document.getElementById('form');
+            form.onsubmit = function() {
+                var url = '/account/'
+                event.preventDefault();
+                event.stopPropagation();  
+                var username = ($('#id_username')).val();
+                var password = ($('#id_password')).val();  
+                $.ajax({
+                  url: "{% url 'acc' %}",  
+                  type: "POST", // or "get"
+                  headers: {'X-CSRFToken': '{{ csrf_token }}'}, // for csrf token
+                  data:{
+                    'username': username, 
+                    'password':password,
+                  },
+                  success: function loginResponse(response) {  
+                    if(response['success'] !== true){
+                        $("#message").attr('class', 'alert alert-danger');
+                        $("#message").show().text(response['message'])
+                    } else {
+                        console.log('succes login');
+                        $("#form").hide()
+                        $("#logout").show()
+                        $("#message").attr('class', 'alert alert-success');
+                        $("#message").show().text(response['message'])
+                    }                                     
+                  }
+                });   
+            }
+            var logout = document.getElementById('logout');
+            logout.onsubmit = function() {
+                event.preventDefault();
+                $.ajax({
+                  url: "{% url 'acc_logout' %}",  
+                  type: "GET", // or "get"
+                  data:{},
+                  success: function logoutResponse(response) {  
+                    console.log('succes logout');
+                    $("#logout").hide()
+                    $("#message").hide()
+                  }
+                });   
+            }
+        }
+    </script>
+        <div id="message" class="alert alert-primary" role="alert"></div>
+        <form class="" action="" method="post" id="form">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" name="signup" value="Submit">
+        </form>
+        <form class="" action="" method="post" id="logout">
+          <input type="submit" name="logout" value="Logout">
+        </form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block h1 %}{{ object.title }}{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Chat rooms</h1>
+        <ul>
+        {% for chat in object_list %}
+        <li>
+          <a href="{% url 'chat-detail' chat.id %}">
+          {{ chat.title }}
+          </a>
+        </li>
+        {% empty %}
+        <li>
+                No chats yet.
+        </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -1,47 +1,46 @@
 {% extends "base.html" %}
 {% block h1 %}
-    {% if not publications %}
+  {% if not publications %}
     Articles
-    {% else %}
+  {% else %}
     Publications
-    {% endif %}
+  {% endif %}
 {% endblock %}
 {% block content %}
-<table class="bordered">
+  <table class="bordered">
     <tr>
-        <th> Title </th>
-        <th> Synopsis </th>
-        {% if not publications %}
+      <th> Title </th>
+      <th> Synopsis </th>
+      {% if not publications %}
         <th> Writer </th>
-        {% endif %}
-        <th> Created </th>
-        {% if not publications %}
+      {% endif %}
+      <th> Created </th>
+      {% if not publications %}
         <th> When </th>
-        {% endif %}
-        <th></th>
-
+      {% endif %}
+      <th></th>
     </tr>
-{% for article in object_list %}
-<tr>
-    <td> {{ article.title }} </td>
-    <td>
-        {{ article.synopsis | truncatechars:20 }} 
-    </td>
-    {% if not publications %}
-    <td> {{ article.author }} </td>
-    {% endif %}
-    <td> {{ article.created }} </td>
-    {% if not publications %}
-    <td> {{ article.duration }} </td>
-    {% endif %}
-    <td><button class = "btn btn-info" onclick="window.location='{% url 'article-detail' article.id %}'">READ</a></td>
-</tr>
-{% empty %}
-<tr>
-    <td colspan="6">
-        No articles yet.
-    </td>
-</tr>
-{% endfor %}
-</table>
+    {% for article in object_list %}
+      <tr>
+        <td> {{ article.title }} </td>
+        <td>
+          {{ article.synopsis | truncatechars:20 }} 
+        </td>
+        {% if not publications %}
+          <td> {{ article.author }} </td>
+        {% endif %}
+        <td> {{ article.created }} </td>
+        {% if not publications %}
+          <td> {{ article.duration }} </td>
+        {% endif %}
+        <td><button class = "btn btn-success" onclick="window.location='{% url 'article-detail' article.id %}'">READ</a></td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="6">
+          No articles yet.
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block h1 %}Register{% endblock %}
+{% block h1 %}Loout 0{% endblock %}
 {% block content %}
 
     <form class="" action="" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" name="signup" value="Register">
+      <input type="submit" name="signup" value="Logout">
     </form>
 
 {% endblock %}
