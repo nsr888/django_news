@@ -29,6 +29,7 @@ table.bordered th {
 }
 #chat-log {
   display: grid;
+  background-color: #dedede;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
   list-style-type: none;
@@ -43,6 +44,10 @@ table.bordered th {
   background: transparent;
   margin: 0;
   padding: 0;
+  border-left: 0px none transparent;
+}
+.chat li {
+  border-left: 3px solid #ffc107;
 }
 .chat {
   display: grid;

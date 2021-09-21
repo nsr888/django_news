@@ -1,28 +1,6 @@
 {% extends "base.html" %}
 {% block h1 %} Register {% endblock %}
 {% block content %}
-  <style>
-  .helptext {
-      margin: 5px;
-      color: gray;
-  }
-
-  a.helptext span {
-      display:none;
-      width: 30em;
-      text-align: justify;
-      z-index:1;
-  }
-
-  a.helptext:hover span {
-      display:inline;
-      position:absolute;
-      background:#ffffff;
-      border:1px solid #cccccc;
-      color:#6c6c6c;
-  }
-  </style>
-
   <form class="" action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}

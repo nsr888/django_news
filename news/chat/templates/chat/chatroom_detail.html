@@ -1,115 +1,38 @@
 {% extends "base.html" %}
-{% block h1 %}{{ object.title }}{% endblock %}
+{% block h1 %}
+    {{ object.title }}
+{% endblock %}
+{% block link_css %}
+    {% load static %}
+    <link href="{% static '/css/chat.css' %}" rel="stylesheet">
+{% endblock %}
 {% block content %}
-    <style>
-      {% load static %}
-      @import url('{% static 'chat.css' %}');
-    </style>
     {% if user.is_authenticated %}
-        {% load static %}
         <div class="chat">
             <div class="users">
                 <p>Active users:</p>
                 <p id="active-users"></p>
             </div>
             <div class="chatlist">
-                <ul id="chat-log" class="shadow-lg p-3 mb-5 bg-body rounded"><li></li></ul><br>
-                <div class="input-group">
-                  <span class="input-group-text">
-                    {{ user.username }}
-                  </span>
+                <ul id="chat-log" class="shadow-sm p-3 mb-2 rounded"><li></li></ul>
+                <div class="input-group shadow-sm">
+                  <!-- <span class="input-group-text"> -->
+                  <!--   {{ user.username }} -->
+                  <!-- </span> -->
                   <input id="chat-message-input"type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
                   <button id="chat-message-submit" class="btn btn-warning" type="button" id="button-addon2">Send</button>
                 </div>
             </div>
         </div>
-        {{ object.id|json_script:"room-name" }}
+        {% load static %}
+        <script src="{% static '/js/chat.js' %}"></script>
         <script>
-            const roomName = JSON.parse(document.getElementById('room-name').textContent);
-            const chatSocket = new WebSocket(
-                'ws://'
-                + window.location.host
-                + '/ws/chat/'
-                + roomName
-                + '/'
-            );
-            let userSet = new Set();
-
-            // on message
-            chatSocket.onmessage = function(e) {
-                const data = JSON.parse(e.data);
-                if (data.message_type !== 3) {
-                    $('#chat-log').append(
-                        $('<li class="card m-3 p-3 bg-light">').append(data.message)
-                    );
-                    $("#chat-log").stop().animate({ scrollTop:
-                                        $("#chat-log")[0].scrollHeight}, 1000);
-                }
-                if (data.message_type === 2) {
-                    // delete user
-                    userSet.delete(data.user_name);
-                } else {
-                    // ping or open socket
-                    console.log(data.user_name, ": ", data.message_type);
-                    userSet.add(data.user_name);
-                }
-                let str = '';
-                userSet.forEach(function(user) {
-                                str += '<div class="badge bg-warning text-dark text-wrap">' + user + '</div>';
-                });
-                document.getElementById("active-users").innerHTML = str;
-            };
+            let arr = [];
             {% for msg in messages_out %}
-                $('#chat-log').append(
-                    $('<li class="card m-3 p-3 bg-light">').append('{{ msg.message }}')
-                );
+                arr.push('{{ msg.message }}');
             {% empty %}
             {% endfor %}
-            $("#chat-log").stop().animate({ scrollTop: $("#chat-log")[0].scrollHeight}, 1000);
-
-            // on close
-            chatSocket.onclose = function(e) {
-                console.log('Chat socket closed unexpectedly');
-            };
-
-            $(window).bind('beforeunload', function(){
-                chatSocket.close();
-            });
-
-            document.querySelector('#chat-message-input').focus();
-            document.querySelector('#chat-message-input').onkeyup = function(e) {
-                if (e.keyCode === 13) {  // enter, return
-                    document.querySelector('#chat-message-submit').click();
-                }
-            };
-
-            document.querySelector('#chat-message-submit').onclick = function(e) {
-                const messageInputDom = document.querySelector('#chat-message-input');
-                const message = messageInputDom.value;
-                chatSocket.send(JSON.stringify({
-                    'user_id': {{ user.id }},
-                    'message_type': 0,
-                    'message': '{{ user.username }}: ' + message
-                }));
-                messageInputDom.value = '';
-            };
-
-            // on open
-            chatSocket.onopen = function (event) {
-                console.log('connection is open!')
-                chatSocket.send(JSON.stringify({
-                    'user_id': {{ user.id }},
-                    'message_type': 1,
-                    'message': '{{ user.username }} has joined the chat'
-                }));
-                setInterval(() => {
-                    chatSocket.send(JSON.stringify({
-                        'user_id': {{ user.id }},
-                        'message_type': 3,
-                        'message': ''
-                    }));
-                }, 2000);
-            }
+            appChat('{{ object.id }}', arr, {{ user.id }}, '{{ user.username }}');
         </script>
     {% endif %}
 {% endblock %}
