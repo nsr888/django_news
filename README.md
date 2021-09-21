@@ -9,8 +9,11 @@
 * __Docker compose__
 
 ## Features
-* User can create chat rooms
-* Show active users in chat room
-* Show login/logout user messages in chat room
-* User can create articles
-* User can add article to favorites list
+* Chat rooms
+  * User can create chat rooms
+  * Chat with other users
+  * Show active users in chat room
+  * Show login/logout user messages in chat room
+* Articles
+  * User can create articles
+  * User can add article to favorites list
