@@ -1,6 +1,6 @@
-# News website Python Django Project 
-* Display last posts
-* Only logged-in users can add posts
-* User can add posts to favorite list
+# News website with chat
+* Backend: Python Django, django channels, Websockets
+* Frontend: HTML, CSS, Bootstrap 5, Jquery
+* DB: Sqlite
 
-![django_news](https://user-images.githubusercontent.com/12528718/130568477-2101fb5e-3067-4785-9daa-aee4bd0d2bab.gif)
+![chat](https://user-images.githubusercontent.com/12528718/134146727-ce578df8-8d8e-4ed8-a745-e3b3fab16ac9.gif)
