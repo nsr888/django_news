@@ -1,8 +1,10 @@
 from django.utils import timezone
-from django.shortcuts import render
+from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import ChatRoom, Message
+from django.urls import reverse_lazy
+
 
 class ChatListView(ListView):
     model = ChatRoom
@@ -20,3 +22,9 @@ class ChatDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['messages_out'] = reversed(Message.objects.filter(chatroom=self.object).order_by('-created')[:3])
         return context
+
+
+class ChatRoomCreateView(CreateView):
+    model = ChatRoom
+    fields = ["title"]
+    success_url = reverse_lazy("chat-list")

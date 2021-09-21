@@ -10,9 +10,11 @@ cryptography==3.4.7
 daphne==3.0.2
 Django==3.2.6
 django-bootstrap5==2.1.2
+django-environ==0.7.0
 hyperlink==21.0.0
 idna==3.2
 incremental==21.3.0
+psycopg2-binary==2.9.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
