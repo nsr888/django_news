@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.9'
 
 x-env: &default-env
   DATABASE_URL: postgres://postgres:password@postgres:5432/postgres
@@ -14,6 +14,11 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer
@@ -22,16 +27,18 @@ services:
       - 8080:8080
 
   django:
-    build:
-      context: .
-      dockerfile: django.dockerfile
+    build: .
+    image: django_news_nginx
     restart: on-failure
-    privileged: true
     environment: *default-env
     depends_on:
-      - postgres
-    volumes:
-      - ./news:/app
+      postgres:
+        condition: service_healthy
     ports:
-      - '80:8000'
-    command: /start-django
+      - "80:8113"
+
+  redis:
+    image: redis:alpine
+    container_name: redis_alpine
+    ports:
+      - "6379:6379"
