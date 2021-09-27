@@ -5,8 +5,8 @@
 ## Tech stack
 * __Backend:__ Python Django, django channels, Websockets
 * __Frontend:__ HTML/CSS, Bootstrap 5, Jquery
-* __DB:__ Postgres
-* __Docker compose__
+* __Datastores:__ Postgres, Redis
+* __Containerization:__ Docker, Docker Compose, Alpine, Nginx, uWSGI, Daphne
 
 ## Features
 * Chat rooms
